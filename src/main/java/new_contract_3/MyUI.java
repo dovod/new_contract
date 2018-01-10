@@ -164,9 +164,7 @@ public class MyUI extends UI {
     }
 
     private void sqlRequest(Contract newcontract) {
-        String userName = "dovod";
-        String password = "dovod34.Oracle";
-        String url_db = "jdbc:oracle:thin:@localhost:1521:xe";
+
         try {
             Connection conn = DriverManager.getConnection(url_db, userName, password);
             Statement statement = conn.createStatement();
