@@ -1,0 +1,40 @@
+CREATE TYPE insurant_typ3 AS OBJECT
+(
+insurant_id NUMBER(16),
+fio VARCHAR2(50),
+sex      CHAR(6),
+date_of_birth DATE,
+phone_number VARCHAR2(20)
+);
+/
+CREATE TYPE insurance_object_typ3 AS OBJECT
+(
+insurance_object_id NUMBER(16),
+place_of_insurance VARCHAR2(50)
+);
+/
+CREATE TYPE insurance_conditions_typ3 AS OBJECT
+(
+sum_insured NUMBER(16),
+insurance_premium NUMBER(8,2)
+);
+/
+CREATE TYPE contracts_typ3 AS OBJECT
+(
+contracts_id   NUMBER(16),
+date_of_commencement    DATE,
+expiry_date DATE,
+date_of_contract DATE,
+insurant insurant_typ3,
+insurance_conditions insurance_conditions_typ3,
+insurance_object insurance_object_typ3
+);
+/
+CREATE TABLE contracts_tab3 OF contracts_typ3;
+
+
+
+INSERT INTO contracts_tab3 VALUES(498357, TO_DATE('10/MAY/2011 8:30:00AM','DD/MON/YY HH:MI:SSAM'),
+ TO_DATE('17/MAY/2011 8:30:00AM','DD/MON/YY HH:MI:SSAM'),null, insurant_typ3(773,'Иванов',null,null,null), null, null);
+
+SELECT contracts.date_of_commencement, contracts.expiry_date, contracts.insurant.sex  FROM contracts_tab3 contracts;
