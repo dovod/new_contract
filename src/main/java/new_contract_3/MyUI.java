@@ -14,6 +14,8 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 
 import javax.servlet.annotation.WebServlet;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -24,8 +26,7 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
-//import com.vaadin.data.validator.*;
+import java.util.Properties;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window
@@ -164,7 +165,21 @@ public class MyUI extends UI {
     }
 
     private void sqlRequest(Contract newcontract) {
-
+        String userName = null;
+        String password = null;
+        String url_db = null;
+        String testString = null;
+        Properties props = new Properties();
+        InputStream inputStream = MyUI.class.getClassLoader().getResourceAsStream("config.properties");
+        try {
+            props.load(inputStream);
+            userName = props.getProperty("userName_db");
+            password = props.getProperty("password_db");
+            url_db = props.getProperty("url_db");
+        } catch (IOException e) {
+            System.out.println("config.properties not found");
+            e.printStackTrace();
+        }
         try {
             Connection conn = DriverManager.getConnection(url_db, userName, password);
             Statement statement = conn.createStatement();
